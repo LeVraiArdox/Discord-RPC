@@ -2,7 +2,7 @@ const rpc = require("discord-rpc");
 const os = require("os");
 const exec = require("child_process").exec;
 
-const clientId = "YOUR_ID"; // Replace this
+const clientId = "1242141055722328247";
 
 rpc.register(clientId);
 
