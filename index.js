@@ -14,8 +14,22 @@ let currentTrack = "";
 
 function isDiscordRunning() {
   return new Promise((resolve) => {
-    exec("pgrep -x Discord", (err, stdout) => {
-      resolve(stdout.trim().length > 0);
+    const clients = [
+      "discord",
+      "vesktop"
+    ];
+    const checks = clients.map((client) => {
+      return new Promise((res) => {
+        exec(`pgrep -x ${client}`, (err, stdout) => {
+          if (stdout.trim().length > 0) {
+            activeClient = client; // Set the active editor
+          }
+          res(stdout.trim().length > 0);
+        });
+      });
+    });
+    Promise.all(checks).then((results) => {
+      resolve(results.some((result) => result));
     });
   });
 }
